@@ -51,6 +51,25 @@ module.exports = {
                 error: err
             })
         })
-    }
+    },
+
+    update: (req, res) => {{
+        const taskId = req.param('id')
+        Task.update(taskId, req.allParams())
+        .then((task) => {
+            return res.send({
+                success: true,
+                message: 'Task modified successfully',
+                data: task
+            })
+        })
+        .catch(err => {
+            sails.log.debug(err)
+            return res.send({
+                success: false,
+                message: 'Unable to update the task'
+            })
+        })
+    }}
 };
 

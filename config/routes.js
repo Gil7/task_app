@@ -28,7 +28,8 @@ module.exports.routes = {
     view: 'pages/homepage'
   },
   'GET /api/tasks': 'TaskController.get',
-  'POST /api/tasks': 'TaskController.store'
+  'POST /api/tasks': 'TaskController.store',
+  'PUT /api/tasks/:id': 'TaskController.update'
 
   /***************************************************************************
   *                                                                          *
