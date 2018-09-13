@@ -6,9 +6,20 @@
  */
 
 module.exports = {
-
+  tableName: 'tasks',
   attributes: {
-
+    
+    title: {
+      type: 'string',
+      required:true
+    },
+    description: {
+      type: 'string',
+    },
+    done: {
+      type: 'boolean',
+      defaultsTo: false
+    }
     //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
     //  ╠═╝╠╦╝║║║║║ ║ ║╚╗╔╝║╣ ╚═╗
     //  ╩  ╩╚═╩╩ ╩╩ ╩ ╩ ╚╝ ╚═╝╚═╝
