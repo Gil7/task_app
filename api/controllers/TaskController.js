@@ -53,7 +53,7 @@ module.exports = {
         })
     },
 
-    update: (req, res) => {{
+    update: (req, res) => {
         const taskId = req.param('id')
         Task.update(taskId, req.allParams())
         .then((task) => {
@@ -70,6 +70,24 @@ module.exports = {
                 message: 'Unable to update the task'
             })
         })
-    }}
+    },
+    remove: (req, res) => {
+        const taskId = req.param('id')
+        Task.destroy(taskId)
+        .then((task) => {
+            return res.send({
+                success: true,
+                message: 'Tasks removed successfully',
+                data: task
+            })
+        })
+        .catch((err) => {
+            sails.log.debug(err)
+            return res.send({
+                success: false,
+                message: 'Unable to remove the task'
+            })
+        })
+    }
 };
 

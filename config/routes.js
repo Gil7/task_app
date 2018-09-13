@@ -29,7 +29,8 @@ module.exports.routes = {
   },
   'GET /api/tasks': 'TaskController.get',
   'POST /api/tasks': 'TaskController.store',
-  'PUT /api/tasks/:id': 'TaskController.update'
+  'PUT /api/tasks/:id': 'TaskController.update',
+  'DELETE /api/tasks/:id': 'TaskController.remove'
 
   /***************************************************************************
   *                                                                          *
