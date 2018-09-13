@@ -28,6 +28,7 @@ module.exports.routes = {
     view: 'pages/homepage'
   },
   'GET /api/tasks': 'TaskController.get',
+  'POST /api/tasks': 'TaskController.store'
 
   /***************************************************************************
   *                                                                          *
