@@ -33,24 +33,22 @@ module.exports = {
         });
     },
 
-    store: (req, res) => {
-        sails.log.debug(req.body)
-        Task.create(req.allParams())
-        .then((task) => {
-            return res.send({
+    store: async (req, res) => {
+        try{
+            const new_task = await Task.create(req.allParams()).fetch()
+            return res.json({
                 success: true,
-                message: 'Task saved correctly',
-                data: task
+                message: 'Task stored',
+                task: new_task
             })
-        })
-        .catch(err => {
-            sails.log.debug(err)
-            return res.send({
+        }
+        catch(err){
+            return res.json({
                 success: false,
-                message: 'Error storing the task',
-                error: err
+                message: 'Error storing the taks',
+                error: err.message
             })
-        })
+        }
     },
 
     update: (req, res) => {
