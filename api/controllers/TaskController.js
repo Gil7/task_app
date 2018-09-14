@@ -52,7 +52,7 @@ module.exports = {
 
     update: async (req, res) => {
         const taskId = req.param('id')
-        const message = req.body.done ? 'Estatus changed' : 'Task updated correclty'
+        const message = 'done' in req.body ? 'Estatus changed' : 'Task updated correclty'
         try{
             const taskUpdated = await Task.update(taskId, req.allParams()).fetch()    
             return res.send({

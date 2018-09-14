@@ -13,18 +13,20 @@
     <form v-on:submit.prevent="onSubmit()">
       <div class="form-group">
         <label for="">Title</label>
+        
         <input type="text" class="form-control" v-model="titleTask" name="" id="">
+        <span class="text-info" v-if="isAValidForm">Title is required</span>
       </div>
       <div class="form-group">
         <label for="">Description</label>
         <input type="text" v-model="description" class="form-control">
       </div>
-      <button type="submit" class="btn btn-success">Save</button>
+      <button type="submit" :disabled="isAValidForm" class="btn btn-success">Save</button>
     </form>
   </div>
   <div class="col-md-6">
       <ul class="list-group">
-        <li class="list-group-item" v-for="(task, index) in tasks">
+        <li class="list-group-item" v-for="(task, index) in tasks_organized">
           <div class="edit_info" v-if="editing && index_task_editing == index">
               <form v-on:submit.prevent="updateTask()">
                   <div class="form-group">

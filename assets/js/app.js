@@ -76,7 +76,6 @@ new Vue({
             .then(response => {
                 this.message = response.data.message
                 this.info_message = true
-                console.log(index)
                 this.tasks[index].done = done
             })
             .catch(err => {
@@ -101,9 +100,9 @@ new Vue({
             .then(response => {
                 this.message = response.data.message
                 this.info_message = true
-                this.tasks[this.index_task_editing] = response.data.task
-                this.index_task_editing = 0
-                this.task_editing = false
+                this.tasks[this.index_task_editing].title = this.task_editing.title
+                this.tasks[this.index_task_editing].description = this.task_editing.description 
+                
             })
             .catch(err => {
                 this.error_message = true
@@ -127,5 +126,15 @@ new Vue({
             this.$refs.closemodal.click();  
         }
     },
+    computed: {
+        isAValidForm: function(){
+            return this.titleTask == ''
+        },
+        tasks_organized: function(){
+            return this.tasks.sort((a,b) => {
+                return a.id < b.id
+            })
+        }
+    }
     
 })
