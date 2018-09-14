@@ -25,11 +25,12 @@
     </form>
     <hr>
     <h4>About your tasks</h4>
-    <p>Completed Tasks: <span class="badge bg-info">{{completed_tasks}}</span></p>
-    <p>Pending tasks: <span class="badge bg-info">{{pending_tasks}}</span></p>
-    
+    <p>Completed Tasks: <button @click="filterCompleted()" class="btn btn-sm btn-success"><span class="badge bg-dark">{{completed_tasks}}</span></button></p>
+    <p>Pending tasks: <button @click="filterPending()" class="btn btn-sm btn-danger"><span class="badge bg-dark">{{pending_tasks}}</span></button></p>
+    <p><a href="" v-if="only_completed_tasks || only_pending_tasks" @click="showAll()">See all</a></p>
   </div>
-  <div class="col-md-6">
+  <div class="col-md-6" style="overflow-y: scroll; height: 600px !important;">
+      <input type="text" placeholder="Type your task..." class="form-control" v-model="lookfor">
       <ul class="list-group">
         <li class="list-group-item" v-for="(task, index) in tasks_organized">
           <div class="edit_info" v-if="editing && index_task_editing == index">

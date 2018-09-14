@@ -17,7 +17,10 @@ new Vue({
             error_message: false,
             info_message: false,
             task_will_removed : 0,
-            index_task_removed: 0
+            index_task_removed: 0,
+            lookfor: '',
+            only_completed_tasks: false,
+            only_pending_tasks: false
         }
     },
     mounted(){
@@ -124,16 +127,40 @@ new Vue({
         },
         hideModal: function(){
             this.$refs.closemodal.click();  
+        },
+        filterPending: function(){
+            this.only_pending_tasks = true
+            this.only_completed_tasks = false
+        },
+        filterCompleted: function(){
+            this.only_pending_tasks = false
+            this.only_completed_tasks = true
+        },
+        showAll: function(){
+            this.only_pending_tasks = false
+            this.only_completed_tasks = false
         }
+       
     },
     computed: {
         isAValidForm: function(){
             return this.titleTask == ''
         },
         tasks_organized: function(){
-            return this.tasks.sort((a,b) => {
-                return a.id < b.id
+            let sorted_tasks = this.tasks
+            sorted_tasks =  this.tasks.sort((a,b) => {
+                return a.id < b.id 
             })
+            if(this.lookfor != ''){
+                sorted_tasks =  sorted_tasks.filter(task => task.title.includes(this.lookfor))
+            }
+            if(this.only_completed_tasks){
+                sorted_tasks = sorted_tasks.filter(task => task.done == true)
+            }
+            if(this.only_pending_tasks){
+                sorted_tasks = sorted_tasks.filter(task => task.done == false)
+            }
+            return sorted_tasks
         },
         completed_tasks: function(){
             const total = this.tasks.filter((task) => {
@@ -143,7 +170,8 @@ new Vue({
         },
         pending_tasks: function(){
             return this.tasks.length -  this.completed_tasks
-        }
+        },
+        
     }
     
 })
