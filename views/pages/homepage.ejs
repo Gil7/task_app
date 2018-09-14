@@ -23,6 +23,11 @@
       </div>
       <button type="submit" :disabled="isAValidForm" class="btn btn-success">Save</button>
     </form>
+    <hr>
+    <h4>About your tasks</h4>
+    <p>Completed Tasks: <span class="badge bg-info">{{completed_tasks}}</span></p>
+    <p>Pending tasks: <span class="badge bg-info">{{pending_tasks}}</span></p>
+    
   </div>
   <div class="col-md-6">
       <ul class="list-group">

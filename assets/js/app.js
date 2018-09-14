@@ -134,6 +134,15 @@ new Vue({
             return this.tasks.sort((a,b) => {
                 return a.id < b.id
             })
+        },
+        completed_tasks: function(){
+            const total = this.tasks.filter((task) => {
+                return task.done
+            })
+            return total.length
+        },
+        pending_tasks: function(){
+            return this.tasks.length -  this.completed_tasks
         }
     }
     
