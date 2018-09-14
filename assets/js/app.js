@@ -5,7 +5,7 @@ new Vue({
             titleTask: '',
             description: '',
             tasks: [],
-            title: 'Saisl - Vue - TodoApp',
+            title: 'Sails - Vue - TodoApp',
             editing: false,
             index_task_editing: null,
             task_editing : {
