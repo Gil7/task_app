@@ -6,9 +6,8 @@
  */
 
 module.exports = {
-
     get: (req, res) => {
-        Task.find()
+        Task.find().sort('id DESC')
         .then((tasks) => {
             if(!tasks || tasks.length < 1){
                 return res.send({
@@ -51,23 +50,25 @@ module.exports = {
         }
     },
 
-    update: (req, res) => {
+    update: async (req, res) => {
         const taskId = req.param('id')
-        Task.update(taskId, req.allParams())
-        .then((task) => {
+        const message = req.body.done ? 'Estatus changed' : 'Task updated correclty'
+        try{
+            const taskUpdated = await Task.update(taskId, req.allParams()).fetch()    
             return res.send({
                 success: true,
-                message: 'Task modified successfully',
-                data: task
+                message: message,
+                task: taskUpdated
             })
-        })
-        .catch(err => {
+        }catch(err){
             sails.log.debug(err)
             return res.send({
                 success: false,
                 message: 'Unable to update the task'
             })
-        })
+        }
+        
+       
     },
     remove: (req, res) => {
         const taskId = req.param('id')

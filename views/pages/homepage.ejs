@@ -1,14 +1,21 @@
 <div class="row mt-4" id="app">
   <div class="col-sm-12">
       <h1>{{title}}</h1>
+      <div v-if="message" :class="{'alert-danger' : error_message, 'alert-primary' : info_message}" class="alert alert-dismissible fade show" role="alert">
+          {{message}}
+          <button type="button" class="close" @click="hideMessage()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
   </div>
+  
   <div class="col-md-6">
     <form v-on:submit.prevent="onSubmit()">
       <div class="form-group">
         <label for="">Title</label>
         <input type="text" class="form-control" v-model="titleTask" name="" id="">
       </div>
-      <div class="form-group">2
+      <div class="form-group">
         <label for="">Description</label>
         <input type="text" v-model="description" class="form-control">
       </div>
@@ -17,11 +24,59 @@
   </div>
   <div class="col-md-6">
       <ul class="list-group">
-        <li class="list-group-item" v-for="task in tasks">
-          {{task.title}} 
-          <p>{{task.title}}</p>
+        <li class="list-group-item" v-for="(task, index) in tasks">
+          <div class="edit_info" v-if="editing && index_task_editing == index">
+              <form v-on:submit.prevent="updateTask()">
+                  <div class="form-group">
+                    <label for="">Title</label>
+                    <input type="text" class="form-control" v-model="task_editing.title" name="" id="">
+                  </div>
+                  <div class="form-group">
+                    <label for="">Description</label>
+                    <input type="text" v-model="task_editing.description" class="form-control">
+                  </div>
+                </form>
+          </div>
+          <div class="show_info" v-else>
+              <div class="form-check">
+                <input @click="changeState($event,task.id, index)" :checked="task.done == true" class="form-check-input" type="checkbox" :id="'defaultCheck' + task.id">
+                <label class="form-check-label" :for="'defaultCheck' + task.id">
+                  Done
+                </label>
+              </div>
+              {{task.title}} 
+              <p>{{task.description}}</p>
+          </div>
+          <p v-if="editing && index_task_editing == index">
+              <button class="btn btn-xs btn-warning" @click="updateTask()">Save changes</button>
+              <button class="btn btn-xs btn-danger" @click="cancelEditing()">Cancel</button>
+          </p>
+          <p v-else>
+              <button class="btn btn-xs btn-warning" @click="changeEditingState(task,index)">Edit</button>
+              <button class="btn btn-xs btn-danger" @click="confirmWithModal(task.id, index)" data-toggle="modal" data-target="#exampleModal">Remove</button>
+          </p>
         </li>
       </ul>
   </div>
-  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Confirm</h5>
+            <button type="button" ref="closemodal" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            ¿Do you really want to remove this task?
+          </div>
+          <div class="modal-footer">
+            
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" @click="cancelModal()">Close</button>
+            <button type="button" class="btn btn-danger" @click="removeTask()">Remove</button>
+          </div>
+        </div>
+      </div>
+    </div>
 </div>

@@ -75,6 +75,8 @@ var jsFilesToInject = [
   // here, _above_ this one.
   'js/**/vue.js',
   'js/**/axios.js',
+  'js/**/jquery.js',
+  'js/**/bootstrap.js',
   'js/**/app.js'
 ];
 
